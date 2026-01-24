@@ -1,5 +1,6 @@
 package br.com.sanadev.rest_with_spring_boot_and_java.controller;
 
+import br.com.sanadev.rest_with_spring_boot_and_java.exception.UnsupportedMathOperationException;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,6 +49,32 @@ public class MathController {
         return convertToDouble(first)/convertToDouble(second);
     }
 
+    //http://localhost:8080/math/squareRoot/25
+    @RequestMapping("/squareRoot/{number}")
+    public Double division(@PathVariable String number) throws Exception {
+        if(!isNumeric(number))throw new UnsupportedMathOperationException("Please set a numeric value!");
+        return Math.sqrt(convertToDouble(number));
+    }
+
+    //http://localhost:8080/math/average/3/5/4/4/3
+    @RequestMapping("/average/{first}/{second}/{third}/{fourth}/{fifth}")
+    public Double average(@PathVariable String first,
+                           @PathVariable String second,
+                           @PathVariable String third,
+                           @PathVariable String fourth,
+                           @PathVariable String fifth) throws Exception {
+        validateParameters(first, second, third, fourth, fifth);
+
+        //Soma todos e depois divide pela quantidade total de numeros
+        double total = convertToDouble(first)+
+                convertToDouble(second)+
+                convertToDouble(third)+
+                convertToDouble(fourth)+
+                convertToDouble(fifth);
+
+        return total/5;
+    }
+
     /**
      * Converte as Strings em double
      *
@@ -66,7 +93,21 @@ public class MathController {
      * @param second
      */
     private void validateParameters(String first, String second) {
-        if (!isNumeric(first)|| !isNumeric(second)) throw new IllegalArgumentException();
+        if (!isNumeric(first)|| !isNumeric(second))
+            throw new UnsupportedOperationException("Please set a numeric value!");
+    }
+
+    /**
+     * Sobrecarga do {@code validateParameters} para abordar o método de {@code average}
+     * @param first
+     * @param second
+     * @param third
+     * @param fourth
+     * @param fifth
+     */
+    private void validateParameters(String first, String second, String third, String fourth, String fifth) {
+        if (!isNumeric(first)|| !isNumeric(second)|| !isNumeric(third)|| !isNumeric(fourth)|| !isNumeric(fifth))
+            throw new UnsupportedOperationException("Please set a numeric value!");
     }
 
     /**
@@ -76,7 +117,8 @@ public class MathController {
      * @return {@code true}
      */
     private boolean isNumeric(String stringNumber) {
-        if(stringNumber.isEmpty() || stringNumber == null) throw new IllegalArgumentException();
+        if(stringNumber.isEmpty() || stringNumber == null)
+            throw new UnsupportedOperationException("Please set a numeric value!");
         String number = stringNumber.replace(",", ".");
         return number.matches("[-+]?[0-9]*\\.?[0-9]+");
     }
