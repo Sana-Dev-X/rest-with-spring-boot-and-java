@@ -1,4 +1,4 @@
-package br.com.sanadev.rest_with_spring_boot_and_java.math;
+package br.com.sanadev.rest_with_spring_boot_and_java.math.tools;
 
 public class NumberConverter {
 

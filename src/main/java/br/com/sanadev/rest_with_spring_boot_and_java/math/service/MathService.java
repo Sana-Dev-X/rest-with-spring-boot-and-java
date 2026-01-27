@@ -1,7 +1,7 @@
 package br.com.sanadev.rest_with_spring_boot_and_java.math.service;
 
-import br.com.sanadev.rest_with_spring_boot_and_java.math.NumberConverter;
-import br.com.sanadev.rest_with_spring_boot_and_java.math.ParamValidator;
+import br.com.sanadev.rest_with_spring_boot_and_java.math.tools.NumberConverter;
+import br.com.sanadev.rest_with_spring_boot_and_java.math.tools.ParamValidator;
 import br.com.sanadev.rest_with_spring_boot_and_java.math.exception.UnsupportedMathOperationException;
 import org.springframework.stereotype.Service;
 
