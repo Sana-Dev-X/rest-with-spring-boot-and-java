@@ -1,6 +1,6 @@
-package br.com.sanadev.rest_with_spring_boot_and_java.controller;
+package br.com.sanadev.rest_with_spring_boot_and_java.math.controller;
 
-import br.com.sanadev.rest_with_spring_boot_and_java.service.MathService;
+import br.com.sanadev.rest_with_spring_boot_and_java.math.service.MathService;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

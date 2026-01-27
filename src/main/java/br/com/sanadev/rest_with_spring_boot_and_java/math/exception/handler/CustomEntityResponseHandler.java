@@ -1,7 +1,7 @@
-package br.com.sanadev.rest_with_spring_boot_and_java.exception.handler;
+package br.com.sanadev.rest_with_spring_boot_and_java.math.exception.handler;
 
-import br.com.sanadev.rest_with_spring_boot_and_java.exception.ExceptionResponse;
-import br.com.sanadev.rest_with_spring_boot_and_java.exception.UnsupportedMathOperationException;
+import br.com.sanadev.rest_with_spring_boot_and_java.math.exception.ExceptionResponse;
+import br.com.sanadev.rest_with_spring_boot_and_java.math.exception.UnsupportedMathOperationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

@@ -1,6 +1,6 @@
-package br.com.sanadev.rest_with_spring_boot_and_java.controller;
+package br.com.sanadev.rest_with_spring_boot_and_java.greetings.controller;
 
-import br.com.sanadev.rest_with_spring_boot_and_java.model.Greeting;
+import br.com.sanadev.rest_with_spring_boot_and_java.greetings.model.Greeting;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
