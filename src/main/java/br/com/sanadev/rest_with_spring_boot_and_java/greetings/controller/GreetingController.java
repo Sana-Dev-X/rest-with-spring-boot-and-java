@@ -21,7 +21,7 @@ public class GreetingController {
 
     // http://localhost:8080/greeting?name=Sana
     @RequestMapping("/greeting")
-    public Greeting greeting(@RequestParam String name){
+    public Greeting greeting(@RequestParam(defaultValue = "mundo!") String name){
         return new Greeting(counter.incrementAndGet(), String.format(template, name));
     }
 }

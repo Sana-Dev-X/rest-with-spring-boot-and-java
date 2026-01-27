@@ -51,8 +51,8 @@ public class MathController {
         return service.division(first, second);
     }
 
-    //http://localhost:8080/math/squareRoot/25
-    @RequestMapping("/squareRoot/{number}")
+    //http://localhost:8080/math/square-root/25
+    @RequestMapping("/square-root/{number}")
     public Double squareRoot(@PathVariable String number) throws Exception {
         return service.squareRoot(number);
     }

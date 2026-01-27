@@ -39,7 +39,7 @@ public class MathService {
         return (converter.convertToDouble(first) + converter.convertToDouble(second)) / 2;
     }
     public Double squareRoot(String number) throws Exception {
-        if(validator.isNumeric(number)) throw new UnsupportedMathOperationException("Please set a numeric value!");;
+        if(!validator.isNumeric(number)) throw new UnsupportedMathOperationException("Please set a numeric value!");;
         return Math.sqrt(converter.convertToDouble(number));
     }
 }
