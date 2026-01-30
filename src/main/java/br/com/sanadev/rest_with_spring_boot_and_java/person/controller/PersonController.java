@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.awt.*;
 import java.util.List;
-import java.util.logging.Logger;
 
 /**
  * Classe para estudo de verbos HTTP
@@ -24,8 +23,6 @@ public class PersonController {
     @Autowired
     private PersonService personService;
 
-    Logger logger = Logger.getLogger(PersonController.class.getName());
-
     // http://localhost:8080/person/1
 
     /**
@@ -38,10 +35,7 @@ public class PersonController {
             value = "/{id}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE )
-    public Person findById(@PathVariable String id){
-        logger.info("Finding one Person by ID!");
-        return personService.findById(id);
-    }
+    public Person findById(@PathVariable String id){ return personService.findById(id); }
 
     //http://localhost:8080/person
     //@GetMapping - Utilizaremos RequestMapping, pois no futuro aplicaremos documentação automatica com Swagger
@@ -49,10 +43,7 @@ public class PersonController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public List<Person> findAll(){
-        logger.info("Finding all People!");
-        return personService.findAll();
-    }
+    public List<Person> findAll(){ return personService.findAll(); }
 
     //http://localhost:8080/person/create
     //@PostMapping
@@ -61,10 +52,7 @@ public class PersonController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
-    public Person create(@RequestBody Person person){
-        logger.info("Creating one Person!");
-        return personService.create(person);
-    }
+    public Person create(@RequestBody Person person){ return personService.create(person); }
 
     //http://localhost:8080/person/update
     //@PutMapping
@@ -73,10 +61,7 @@ public class PersonController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
-    public Person update(@RequestBody Person person){
-        logger.info("Updating one Person!");
-        return personService.create(person);
-    }
+    public Person update(@RequestBody Person person){ return personService.create(person); }
 
 
     //http://localhost:8080/person?id=5
@@ -86,9 +71,6 @@ public class PersonController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
-    public List<Person> delete(@RequestParam String id){
-        logger.info("Deleting one Person!");
-        return personService.delete(id);
-    }
+    public List<Person> delete(@RequestParam String id){ return personService.delete(id); }
 
 }
