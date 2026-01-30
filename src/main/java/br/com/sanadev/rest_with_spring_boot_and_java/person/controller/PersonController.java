@@ -7,8 +7,8 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Classe para estudo de verbos HTTP
@@ -24,6 +24,8 @@ public class PersonController {
     @Autowired
     private PersonService personService;
 
+    Logger logger = Logger.getLogger(PersonController.class.getName());
+
     // http://localhost:8080/person/1
 
     /**
@@ -37,6 +39,7 @@ public class PersonController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE )
     public Person findById(@PathVariable String id){
+        logger.info("Finding one Person by ID!");
         return personService.findById(id);
     }
 
@@ -47,6 +50,7 @@ public class PersonController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public List<Person> findAll(){
+        logger.info("Finding all People!");
         return personService.findAll();
     }
 
@@ -58,6 +62,7 @@ public class PersonController {
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
     public Person create(@RequestBody Person person){
+        logger.info("Creating one Person!");
         return personService.create(person);
     }
 
@@ -69,6 +74,7 @@ public class PersonController {
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
     public Person update(@RequestBody Person person){
+        logger.info("Updating one Person!");
         return personService.create(person);
     }
 
@@ -81,6 +87,7 @@ public class PersonController {
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
     public List<Person> delete(@RequestParam String id){
+        logger.info("Deleting one Person!");
         return personService.delete(id);
     }
 
