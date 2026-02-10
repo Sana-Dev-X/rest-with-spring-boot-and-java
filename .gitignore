@@ -1,44 +1,113 @@
-*.class
+# Dependências
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-
-/node_modules
-
-# SSH Keys
-
-*.pem
-*.ppk
+# SSH Keys - Use caminho completo
+**/*.pem
+**/*.ppk
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
-# Package Files #
+# Package Files
 *.jar
 *.war
 *.ear
+*.zip
+*.tar.gz
+*.rar
 
-# Merge Files
+# Arquivos de backup/merge
 *.bak
+*.old
+*.orig
+*.rej
 
-#Gradle temporary files
-/target/
+# Gradle/Maven
+target/
+build/
+out/
+*.class
+.gradle/
+.mvn/
 
-#Eclipse files
-**/.project
-**/.classpath
-**/.settings/
-/bin/
-blog/bin/
-**/.tern-project
-**/.factorypath
+# Eclipse
+.project
+.classpath
+.settings/
+bin/
+.metadata/
 
-#IntelliJ files
-**/*.iml
-/.idea
-**/.gradle
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+*.ids
+*.orig
+atlassian-ide-plugin.xml
 
-#Other Files
-*.ini
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+# VS Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/
+
+# Sistema Operacional
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Arquivos temporários
+*.tmp
+*.temp
+*.swp
+*~
+
+# Virtual machine crash logs
 hs_err_pid*
-/.metadata/
+replay_pid*
+
+# Spring Boot
+spring-boot-devtools.log
+
+# Banco de dados H2 (se usar)
+*.h2.db
+*.trace.db
+
+# Arquivos de configuração sensíveis
+application-local.properties
+application-dev.properties
+*.env
+
+# Outros
+*.ini
+*.cfg
+*.conf
+/coverage/
+/.env.local
+/.env.development.local
+/.env.test.local
+/.env.production.local
