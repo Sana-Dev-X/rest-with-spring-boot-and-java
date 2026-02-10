@@ -1,175 +1,258 @@
-# REST API com Spring Boot e Java
-  
-Este repositório contém meus estudos práticos sobre desenvolvimento de APIs REST utilizando Spring Boot, Java, Swagger/OpenAPI, MySQL e outras tecnologias relacionadas.
+# API REST com Spring Boot e Java
 
-📋 Descrição
+Este repositório contém meus estudos práticos sobre o desenvolvimento de API REST usando Spring Boot, Java, Swagger/OpenAPI, MySQL e outras tecnologias relacionadas.
 
-  O projeto implementa uma API REST completa demonstrando conceitos fundamentais como:
+📋 **Descrição**
 
-    Criação de endpoints REST
+* O projeto implementa uma API REST completa demonstrando conceitos fundamentais como:
 
-    Tratamento de exceções global
+* Criação de endpoints REST
 
-    Documentação automática da API
+* Tratamento global de exceções
 
-    Estruturação de projetos Spring Boot
+* Documentação automática da API
 
-    Operações matemáticas via API
+* Estruturação de projetos Spring Boot
 
-🛠 Tecnologias Utilizadas
+* Operações matemáticas via API
 
-    Java 25
+* Operações CRUD com integração de banco de dados
 
-    Spring Boot 
+* Validação de entrada e tratamento de erros
 
-    Spring Web
+🛠 **Tecnologias Utilizadas**
 
-    Spring Data JPA
+* Java 17+
 
-    MySQL
+* Spring Boot 3.x
 
-    Swagger/OpenAPI 
+* Spring Web
 
-    Maven
+* Spring Data JPA
 
-📁 Estrutura do Projeto
+* MySQL 8.0+
 
-    src/main/java/br/com/sanadev/rest_with_spring_boot_and_java/
-    ├── controller/                    # Controladores REST
-    │   ├── GreetingController.java    # Endpoints de saudação
-    │   └── MathController.java        # Endpoints de operações matemáticas
-    ├── exception/                     # Exceções personalizadas
-    │   ├── ExceptionResponse.record   # Record para resposta de exceções
-    │   └── UnsupportedMathOperationException.exception
-    ├── exception/handler/             # Manipulador global de exceções
-    │   └── CustomEntityResponseHandler.java
-    ├── model/                         # Modelos/Entidades
-    │   └── Greeting.java
-    └── Startup.java                   # Classe principal da aplicação
+* Swagger/OpenAPI (SpringDoc)
 
-🚀 Como Executar
+* Maven
 
-  Pré-requisitos
+* Docker (planejado)
 
-    Java 17 ou superior
+📁 **Estrutura do Projeto**
 
-    Maven 3.6+
+        rest-with-spring-boot-and-java/
+        ├── src/main/java/br/com/sanadev/rest_with_spring_boot_and_java/
+        │   ├── Startup.java
+        │   ├── config/
+        │   ├── greetings/
+        │   │   ├── controller/
+        │   │   │   └── GreetingController.java
+        │   │   └── model/
+        │   │       └── Greeting.java
+        │   ├── math/
+        │   │   ├── controller/
+        │   │   │   └── MathController.java
+        │   │   ├── exception/
+        │   │   │   ├── ExceptionResponse.java
+        │   │   │   ├── UnsupportedMathOperationException.java
+        │   │   │   └── handler/
+        │   │   │       └── CustomEntityResponseHandlerForMathClasses.java
+        │   │   ├── service/
+        │   │   │   └── MathService.java
+        │   │   └── tools/
+        │   │       ├── NumberConverter.java
+        │   │       └── ParamValidator.java
+        │   └── person/
+        │       ├── controller/
+        │       │   └── PersonController.java
+        │       ├── exception/
+        │       │   ├── ExceptionResponse.java
+        │       │   ├── ResourceNotFoundException.java
+        │       │   └── handler/
+        │       │       └── CustomEntityResponseHandler.java
+        │       ├── mock/
+        │       │   └── Mock.java
+        │       ├── model/
+        │       │   └── Person.java
+        │       ├── repository/
+        │       │   └── PersonRepository.java
+        │       └── service/
+        │           └── PersonService.java
+        ├── src/main/resources/
+        │   ├── application.properties
+        │   └── application-dev.properties
+        ├── src/test/java/
+        │   └── [test packages mirror main structure]
+        ├── pom.xml
+        ├── docker-compose.yml (planejado)
+        ├── Dockerfile (planejado)
+        └── README.md  
 
-    MySQL 8.0+
+🚀 **Como Executar**
 
-    IDE (IntelliJ, Eclipse ou VS Code)
+Pré-requisitos
 
-  Configuração do Banco de Dados
-  
-    Crie um banco de dados MySQL:
-    
-    CREATE DATABASE rest_api_study;
+*   Java 17 ou superior
 
- Configure as credenciais no application.properties :
+*   Maven 3.6+
 
-    spring.datasource.url=jdbc:mysql://localhost:3306/rest_api_study
+*   MySQL 8.0+
+
+*   IDE (IntelliJ, Eclipse ou VS Code)
+
+Configuração do Banco de Dados
+
+Crie um banco de dados MySQL:
+
+    CREATE DATABASE rest_with_spring_boot_and_java;
+
+Configure as credenciais em application.properties:
+
+    spring.datasource.url=jdbc:mysql://localhost:3306/rest_with_spring_boot_and_java
     spring.datasource.username=root
     spring.datasource.password=admin
     spring.jpa.hibernate.ddl-auto=update
 
- Executando a Aplicação
+Executando a Aplicação
 
-  Clone o repositório
-  
+Clone o repositório
+
     git clone https://github.com/Sana-Dev-X/rest-with-spring-boot-and-java.git
 
-  Navegue até o diretório
-  
+Navegue até o diretório
+
     cd rest-with-spring-boot-and-java
 
-  Execute com Maven
+Execute com Maven
 
     mvn spring-boot:run
 
-  A aplicação estará disponível em: 
-  
+A aplicação estará disponível em:
+
     http://localhost:8080
 
-📚 Endpoints da API
+📚 **Endpoints da API**
 
-  Greeting Controller
+Greeting Controller
 
-    GET /greeting - Retorna uma saudação básica
+*   GET /greeting - Retorna uma saudação básica
 
-    GET /greeting/{name} - Retorna uma saudação personalizada
+*   GET /greeting/{name} - Retorna uma saudação personalizada
 
-  Math Controller
+Math Controller
 
-    GET /math/sum/{numberOne}/{numberTwo} - Soma de dois números
+*   GET /math/sum/{numberOne}/{numberTwo} - Soma de dois números
 
-    GET /math/subtraction/{numberOne}/{numberTwo} - Subtração de dois números
+*   GET /math/subtraction/{numberOne}/{numberTwo} - Subtração de dois números
 
-    GET /math/multiplication/{numberOne}/{numberTwo} - Multiplicação de dois números
+*   GET /math/multiplication/{numberOne}/{numberTwo} - Multiplicação de dois números
 
-    GET /math/division/{numberOne}/{numberTwo} - Divisão de dois números
+*   GET /math/division/{numberOne}/{numberTwo} - Divisão de dois números
 
-    GET /math/mean/{numberOne}/{numberTwo} - Média de dois números
+*   GET /math/mean/{numberOne}/{numberTwo} - Média de dois números
 
-    GET /math/squareRoot/{number} - Raiz quadrada de um número
+*   GET /math/squareRoot/{number} - Raiz quadrada de um número
 
-📖 Documentação da API
+Person Controller (Operações CRUD)
 
-    A documenttação interativa da API, em breve estará disponível via Swagger UI
+*   GET /person - Lista todas as pessoas
 
-🎯 Objetivos de Aprendizado
-    
-    Configuração de projeto Spring Boot
+*   GET /person/{id} - Encontra pessoa por ID
 
-    Criação de controladores REST
+*   POST /person - Cria nova pessoa
 
-    Implementação de endpoints CRUD
+*   PUT /person/{id} - Atualiza pessoa existente
 
-    Tratamento global de exceções
+*   DELETE /person/{id} - Deleta pessoa
 
-    Configuração do Swagger/OpenAPI
+📖 **Documentação da API**
 
-    Integração com MySQL
+A documentação interativa da API estará disponível em breve via Swagger UI
 
-    Estruturação de pacotes seguindo boas práticas
+🎯 **Objetivos de Aprendizagem**
 
-    Testes unitários e de integração
+*   Configuração e auto-configuração do projeto Spring Boot
 
-    Autenticação e autorização
+*   Criação de controllers REST com métodos HTTP adequados
 
-    Deploy em nuvem
+*   Implementação de operações CRUD com Spring Data JPA
 
-📝 Notas de Estudo
+*   Tratamento global de exceções com @ControllerAdvice
 
-  Este projeto faz parte da minha jornada de aprendizado em desenvolvimento backend com Spring Boot. Cada componente foi implementado para compreender na prática os conceitos fundamentais.
+*   Validação de entrada e validadores personalizados
 
-  Conceitos Abordados:
+*   Configuração do Swagger/OpenAPI para documentação automática
 
-    Inversão de Controle (IoC) e Injeção de Dependência (DI)
+*   Integração com MySQL e mapeamento de entidades
 
-    Controllers e Mapeamento de Endpoints
+*   Estruturação adequada de pacotes seguindo as melhores práticas
 
-    Tratamento de Exceções com @ControllerAdvice
+*   Abstração da camada de serviço e separação da lógica de negócios
 
-    Records do Java para objetos imutáveis
+*   Implementação do padrão Repository
 
-    Documentação Automática com Swagger
+📝 **Notas de Estudo**
 
-    Configuração de Banco de Dados MySQL
+Este projeto faz parte da minha jornada de aprendizado no desenvolvimento backend com Spring Boot. Cada componente foi implementado para entender na prática os conceitos fundamentais.
 
-🔄 Próximos Passos
-    
-    Adicionar autenticação JWT
+Conceitos Abordados:
 
-    Implementar testes com JUnit e Mockito
+*	Inversão de Controle (IoC) e Injeção de Dependência (DI) - Gerenciamento do contêiner Spring
 
-    Adicionar cache com Redis
+*	Controllers e Mapeamento de Endpoints - @RestController, @RequestMapping, anotações de método HTTP
 
-    Implementar logging estruturado
+*	Tratamento de Exceções - Tratamento global de exceções com @ExceptionHandler e @ControllerAdvice
 
-    Configurar Docker e Docker Compose
+*	Persistência de Dados - Mapeamento de entidades, repositórios Spring Data JPA
 
-    Adicionar monitoramento com Actuator
+*	Camada de Serviço - Separação da lógica de negócios e gerenciamento de transações
+
+*	Validação de Entrada - Validadores personalizados e validação de parâmetros
+
+*	Estrutura do Projeto - Organizado por funcionalidade/módulo
+
+*	Configuração - Configuração externalizada com application.properties
+
+🔄 **Próximos Passos & Roadmap**
+
+Metas de Curto Prazo:
+
+*	Adicionar testes unitários abrangentes com JUnit 5 e Mockito
+
+*	Implementar testes de integração com Testcontainers
+
+*	Adicionar anotações de validação (Jakarta Validation)
+
+*	Implementar paginação e ordenação para endpoints de listagem
+
+*	Adicionar logging estruturado com SLF4J
+
+*	Metas de Médio Prazo:
+
+*	Adicionar autenticação e autorização JWT
+
+*	Implementar controle de acesso baseado em função (RBAC)
+
+*	Adicionar cache com Spring Cache e Redis
+
+*	Configurar Docker e Docker Compose para conteinerização
+
+*	Adicionar monitoramento com Spring Boot Actuator
+
+*	Implementar versionamento de API
+
+Metas de Longo Prazo:
+
+*	Adicionar pipeline CI/CD com GitHub Actions
+
+*	Implementar integração de fila de mensagens (RabbitMQ/Kafka)
+
+*	Adicionar rastreamento distribuído com Sleuth/Zipkin
+
+*	Implantar na plataforma de nuvem (AWS/Azure/GCP)
+
+*	Implementar endpoints GraphQL junto com REST
 
 🤝 Contribuição
 
-Como este é um repositório de estudos, sugestões e dicas são bem-vindas! Sinta-se à vontade para abrir issues ou pull requests.  
+Como este é um repositório de estudo, sugestões e dicas são bem-vindas! Sinta-se à vontade para abrir issues ou pull requests.

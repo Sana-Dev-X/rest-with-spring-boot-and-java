@@ -2,52 +2,93 @@
 
 This repository contains my practical studies on REST API development using Spring Boot, Java, Swagger/OpenAPI, MySQL, and other related technologies.
 
-📋 Description
+📋 **Description**
 
-The project implements a complete REST API demonstrating fundamental concepts such as:
+* The project implements a complete REST API demonstrating fundamental concepts such as:
 
-*   Creating REST endpoints
+* Creating REST endpoints
 
-*   Global exception handling
+* Global exception handling
 
-*   Automatic API documentation
+* Automatic API documentation
 
-*   Structuring Spring Boot projects
+* Structuring Spring Boot projects
 
-*   Mathematical operations via API
+* Mathematical operations via API
 
-🛠 Technologies Used
+* CRUD operations with database integration
 
-*   Java 25
+* Input validation and error handling
 
-*   Spring Boot
+🛠 **Technologies Used**
 
-*   Spring Web
+* Java 17+
 
-*   Spring Data JPA
+* Spring Boot 3.x
 
-*   MySQL
+* Spring Web
 
-*   Swagger/OpenAPI
+* Spring Data JPA
 
-*   Maven
+* MySQL 8.0+
 
-📁 Project Structure
+* Swagger/OpenAPI (SpringDoc)
 
-    src/main/java/br/com/sanadev/rest_with_spring_boot_and_java/
-    ├── controller/                    # REST Controllers
-    │   ├── GreetingController.java    # Greeting endpoints
-    │   └── MathController.java        # Mathematical operations endpoints
-    ├── exception/                     # Custom exceptions
-    │   ├── ExceptionResponse.record   # Record for exception response
-    │   └── UnsupportedMathOperationException.exception
-    ├── exception/handler/             # Global exception handler
-    │   └── CustomEntityResponseHandler.java
-    ├── model/                         # Models/Entities
-    │   └── Greeting.java
-    └── Startup.java                   # Main application class
+* Maven
 
-🚀 How to Run
+* Docker (planned)
+
+📁 **Project Structure**
+
+        rest-with-spring-boot-and-java/
+        ├── src/main/java/br/com/sanadev/rest_with_spring_boot_and_java/
+        │   ├── Startup.java
+        │   ├── config/
+        │   ├── greetings/
+        │   │   ├── controller/
+        │   │   │   └── GreetingController.java
+        │   │   └── model/
+        │   │       └── Greeting.java
+        │   ├── math/
+        │   │   ├── controller/
+        │   │   │   └── MathController.java
+        │   │   ├── exception/
+        │   │   │   ├── ExceptionResponse.java
+        │   │   │   ├── UnsupportedMathOperationException.java
+        │   │   │   └── handler/
+        │   │   │       └── CustomEntityResponseHandlerForMathClasses.java
+        │   │   ├── service/
+        │   │   │   └── MathService.java
+        │   │   └── tools/
+        │   │       ├── NumberConverter.java
+        │   │       └── ParamValidator.java
+        │   └── person/
+        │       ├── controller/
+        │       │   └── PersonController.java
+        │       ├── exception/
+        │       │   ├── ExceptionResponse.java
+        │       │   ├── ResourceNotFoundException.java
+        │       │   └── handler/
+        │       │       └── CustomEntityResponseHandler.java
+        │       ├── mock/
+        │       │   └── Mock.java
+        │       ├── model/
+        │       │   └── Person.java
+        │       ├── repository/
+        │       │   └── PersonRepository.java
+        │       └── service/
+        │           └── PersonService.java
+        ├── src/main/resources/
+        │   ├── application.properties
+        │   └── application-dev.properties
+        ├── src/test/java/
+        │   └── [test packages mirror main structure]
+        ├── pom.xml
+        ├── docker-compose.yml (planned)
+        ├── Dockerfile (planned)
+        └── README.md  
+
+🚀 **How to Run**
 
 Prerequisites
 
@@ -63,11 +104,11 @@ Database Configuration
 
 Create a MySQL database:
 
-    CREATE DATABASE rest_api_study;
+    CREATE DATABASE rest_with_spring_boot_and_java;
 
 Configure the credentials in application.properties:
 
-    spring.datasource.url=jdbc:mysql://localhost:3306/rest_api_study
+    spring.datasource.url=jdbc:mysql://localhost:3306/rest_with_spring_boot_and_java
     spring.datasource.username=root
     spring.datasource.password=admin
     spring.jpa.hibernate.ddl-auto=update
@@ -90,7 +131,7 @@ The application will be available at:
 
     http://localhost:8080
 
-📚 API Endpoints
+📚 **API Endpoints**
 
 Greeting Controller
 
@@ -112,63 +153,107 @@ Math Controller
 
 *   GET /math/squareRoot/{number} - Square root of a number
 
-📖 API Documentation
+Person Controller (CRUD Operations)
+
+*   GET /person - List all persons
+
+*   GET /person/{id} - Find person by ID
+
+*   POST /person - Create new person
+
+*   PUT /person/{id} - Update existing person
+
+*   DELETE /person/{id} - Delete person
+
+📖 **API Documentation**
 
 The interactive API documentation will soon be available via Swagger UI
 
-🎯 Learning Objectives
+🎯 **Learning Objectives**
 
-*   Spring Boot project configuration
+*   Spring Boot project configuration and auto-configuration
 
-*   Creation of REST controllers
+*   Creation of REST controllers with proper HTTP methods
 
-*   Implementation of CRUD endpoints
+*   Implementation of CRUD operations with Spring Data JPA
 
-*   Global exception handling
+*   Global exception handling with @ControllerAdvice
 
-*   Swagger/OpenAPI configuration
+*   Input validation and custom validators
 
-*   MySQL integration
+*   Swagger/OpenAPI configuration for automatic documentation
 
-*   Structuring packages following best practices
+*   MySQL integration and entity mapping
 
-*   Unit and integration tests
+*   Proper package structuring following best practices
 
-*   Authentication and authorization
+*   Service layer abstraction and business logic separation
 
-*   Cloud deployment
+*   Repository pattern implementation
 
-📝 Study Notes
+📝 **Study Notes**
 
 This project is part of my learning journey in backend development with Spring Boot. Each component was implemented to practically understand the fundamental concepts.
 
 Concepts Covered:
 
-*   Inversion of Control (IoC) and Dependency Injection (DI)
+*	Inversion of Control (IoC) and Dependency Injection (DI) - Spring container management
 
-*   Controllers and Endpoint Mapping
+*	Controllers and Endpoint Mapping - @RestController, @RequestMapping, HTTP method annotations
 
-*   Exception Handling with @ControllerAdvice
+*	Exception Handling - Global exception handling with @ExceptionHandler and @ControllerAdvice
 
-*   Java Records for immutable objects
+*	Data Persistence - Entity mapping, Spring Data JPA repositories
 
-*   Automatic Documentation with Swagger
+*	Service Layer - Business logic separation and transaction management
 
-*   MySQL Database Configuration
+*	Input Validation - Custom validators and parameter validation
 
-🔄 Next Steps
+*	Project Structure - Organized by feature/module
 
-*   Add JWT authentication
+*	Configuration - Externalized configuration with application.properties
 
-*   Implement tests with JUnit and Mockito
+🔄 **Next Steps & Roadmap**
 
-*   Add cache with Redis
+Short-term Goals:
 
-*   Implement structured logging
 
-*   Configure Docker and Docker Compose
+*	Add comprehensive unit tests with JUnit 5 and Mockito
 
-*   Add monitoring with Actuator
+*	Implement integration tests with Testcontainers
+
+*	Add validation annotations (Jakarta Validation)
+
+*	Implement pagination and sorting for list endpoints
+
+*	Add structured logging with SLF4J
+
+*	Medium-term Goals:
+
+*	Add JWT authentication and authorization
+
+*	Implement role-based access control (RBAC)
+
+*	Add caching with Spring Cache and Redis
+
+*	Configure Docker and Docker Compose for containerization
+
+*	Add monitoring with Spring Boot Actuator
+
+*	Implement API versioning
+
+Long-term Goals:
+
+
+*	Add CI/CD pipeline with GitHub Actions
+
+*	Implement message queue integration (RabbitMQ/Kafka)
+
+*	Add distributed tracing with Sleuth/Zipkin
+
+*	Deploy to cloud platform (AWS/Azure/GCP)
+
+*	Implement GraphQL endpoints alongside REST
 
 🤝 Contribution
 
