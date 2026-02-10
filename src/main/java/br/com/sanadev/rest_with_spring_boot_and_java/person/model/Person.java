@@ -1,16 +1,31 @@
 package br.com.sanadev.rest_with_spring_boot_and_java.person.model;
 
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.util.Objects;
 
+@Entity
+@Table(name = "person")
 public class Person implements Serializable {
+
 
     private static final long serialVersionUID = 1l;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column(name = "first_name", nullable = false, length = 80)
     private String firstName;
+
+    @Column(name = "last_name", nullable = false, length = 80)
     private String lastName;
+
+    @Column(name = "address", nullable = false, length = 100)
     private String address;
+
+    @Column(name = "gender", nullable = false, length = 6)
     private String gender;
 
     public Person(){}

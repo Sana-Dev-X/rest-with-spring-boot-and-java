@@ -20,7 +20,7 @@ import java.util.Date;
  */
 @RestController
 @ControllerAdvice
-public class CustomEntityResponseHandler extends ResponseEntityExceptionHandler {
+public class CustomEntityResponseHandlerForMathClasses extends ResponseEntityExceptionHandler {
 
     /**
      * Retorna um {@code ResponseEntity} formatado quando houver erros genéricos no servidor

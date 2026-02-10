@@ -35,7 +35,14 @@ public class PersonController {
             value = "/{id}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE )
-    public Person findById(@PathVariable String id){ return personService.findById(id); }
+    public Person findById(@PathVariable String id){
+        try{
+            Long idLong = Long.parseLong(id);
+            return personService.findById(idLong);
+        }catch (Exception e){
+           throw new IllegalArgumentException("Invalid ID");
+        }
+    }
 
     //http://localhost:8080/person
     //@GetMapping - Utilizaremos RequestMapping, pois no futuro aplicaremos documentação automatica com Swagger
@@ -61,7 +68,7 @@ public class PersonController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
-    public Person update(@RequestBody Person person){ return personService.create(person); }
+    public Person update(@RequestBody Person person){ return personService.update(person); }
 
 
     //http://localhost:8080/person?id=5
@@ -71,6 +78,14 @@ public class PersonController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
-    public List<Person> delete(@RequestParam String id){ return personService.delete(id); }
+    public void delete(@RequestParam String id){
+        Long longId;
+        try{
+             longId = Long.parseLong(id);
+            personService.delete(longId);
+        } catch (Exception e) {
+            throw new RuntimeException("Invalid ID");
+        }
+    }
 
 }
