@@ -31,9 +31,8 @@ public class PersonController {
      * @param id
      * @return
      */
-    @RequestMapping(
+    @GetMapping(
             value = "/{id}",
-            method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE )
     public Person findById(@PathVariable String id){
         try{
@@ -45,26 +44,18 @@ public class PersonController {
     }
 
     //http://localhost:8080/person
-    //@GetMapping - Utilizaremos RequestMapping, pois no futuro aplicaremos documentação automatica com Swagger
-    @RequestMapping(
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE
-    )
+    @GetMapping( produces = MediaType.APPLICATION_JSON_VALUE )
     public List<Person> findAll(){ return personService.findAll(); }
 
     //http://localhost:8080/person/create
-    //@PostMapping
-    @RequestMapping(
-            method = RequestMethod.POST,
+    @PostMapping(
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
     public Person create(@RequestBody Person person){ return personService.create(person); }
 
     //http://localhost:8080/person/update
-    //@PutMapping
-    @RequestMapping(
-            method = RequestMethod.PUT,
+    @PutMapping(
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
@@ -72,9 +63,7 @@ public class PersonController {
 
 
     //http://localhost:8080/person?id=5
-    //@DeleteMapping
-    @RequestMapping(
-            method = RequestMethod.DELETE,
+    @DeleteMapping(
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
