@@ -1,12 +1,11 @@
 package br.com.sanadev.rest_with_spring_boot_and_java.person.controller;
 
-import br.com.sanadev.rest_with_spring_boot_and_java.person.model.Person;
+import br.com.sanadev.rest_with_spring_boot_and_java.dto.PersonDTO;
 import br.com.sanadev.rest_with_spring_boot_and_java.person.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.*;
 import java.util.List;
 
 /**
@@ -34,7 +33,7 @@ public class PersonController {
     @GetMapping(
             value = "/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE )
-    public Person findById(@PathVariable String id){
+    public PersonDTO findById(@PathVariable String id){
         try{
             Long idLong = Long.parseLong(id);
             return personService.findById(idLong);
@@ -45,21 +44,26 @@ public class PersonController {
 
     //http://localhost:8080/person
     @GetMapping( produces = MediaType.APPLICATION_JSON_VALUE )
-    public List<Person> findAll(){ return personService.findAll(); }
+    public List<PersonDTO> findAll(){
+
+        List<PersonDTO> list = personService.findAll();
+
+        return list;
+    }
 
     //http://localhost:8080/person/create
     @PostMapping(
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
-    public Person create(@RequestBody Person person){ return personService.create(person); }
+    public PersonDTO create(@RequestBody PersonDTO person){ return personService.create(person); }
 
     //http://localhost:8080/person/update
     @PutMapping(
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
-    public Person update(@RequestBody Person person){ return personService.update(person); }
+    public PersonDTO update(@RequestBody PersonDTO person){ return personService.update(person); }
 
 
     //http://localhost:8080/person?id=5

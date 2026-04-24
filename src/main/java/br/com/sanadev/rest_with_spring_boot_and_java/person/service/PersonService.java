@@ -1,79 +1,94 @@
 package br.com.sanadev.rest_with_spring_boot_and_java.person.service;
 
 import br.com.sanadev.rest_with_spring_boot_and_java.person.exception.ResourceNotFountException;
-import br.com.sanadev.rest_with_spring_boot_and_java.person.mock.Mock;
 import br.com.sanadev.rest_with_spring_boot_and_java.person.model.Person;
+import br.com.sanadev.rest_with_spring_boot_and_java.dto.PersonDTO;
 import br.com.sanadev.rest_with_spring_boot_and_java.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
 @Service
-public class PersonService{
+public class PersonService {
 
     private Logger logger = Logger.getLogger(PersonService.class.getName());
 
     @Autowired
     private PersonRepository repository;
 
-    public Person findById(Long id){
-        logger.log(Level.FINE,"Finding one Person!");
+    public PersonDTO findById(Long id) {
+        logger.log(Level.FINE, "Finding one Person!");
         Person person = repository.findById(id).orElseThrow(
                 () -> new ResourceNotFountException("No records found for this ID")
         );
-        logger.log(Level.FINE,"Person found successfully!");
-        return person;
+        logger.log(Level.FINE, "Person found successfully!");
+        return new PersonDTO(person.getId(), person.getFirstName(), person.getLastName(), person.getAddress(), person.getGender());
     }
 
-    public List<Person> findAll() {
-        logger.log(Level.FINE,"Finding all People!");
-        try {
-            List<Person> people = repository.findAll();
-            logger.log(Level.FINE,"People found successfully!");
-            return people;
-        } catch (Exception e) {
-            throw new ResourceNotFountException("No records found");
-        }
+    public List<PersonDTO> findAll() {
+        logger.log(Level.FINE, "Finding all People!");
+        List<Person> people = repository.findAll();
+        logger.log(Level.FINE, "People found successfully!");
+
+        List<PersonDTO> personDTOList = new ArrayList<>();
+        people.forEach(result ->
+                personDTOList.add(new PersonDTO(
+                        result.getId(),
+                        result.getFirstName(),
+                        result.getLastName(),
+                        result.getAddress(),
+                        result.getGender()
+                ))
+        );
+        return personDTOList;
     }
 
-    public Person create(Person person) {
-        logger.log(Level.FINE,"Creating one Person!");
+    public PersonDTO create(PersonDTO person) {
+        logger.log(Level.FINE, "Creating one Person!");
         try {
-            Person entity = repository.save(person);
-            logger.log(Level.FINE,"Person created/updated successfully!");
-            return entity;
+            Person personToSave = new Person(person.firstName(), person.lastName(), person.address(), person.gender());
+            Person entity = repository.save(personToSave);
+
+            PersonDTO entityRecord = new PersonDTO(entity.getId(), entity.getFirstName(), entity.getLastName(), entity.getAddress(), entity.getGender());
+
+            logger.log(Level.FINE, "Person created successfully!");
+            return entityRecord;
         } catch (Exception e) {
             throw new RuntimeException("Error creating person!");
         }
     }
 
-    public Person update(Person person) {
+    public PersonDTO update(PersonDTO person) {
         logger.info("Updating one Person!");
-        try{
-            Optional<Person> optionalPerson = repository.findById(person.getId());
-            if(optionalPerson.isEmpty()) throw new ResourceNotFountException("No records found for this ID");
+        try {
+            Optional<Person> optionalPerson = repository.findById(person.id());
+            if (optionalPerson.isEmpty()) {
+                throw new ResourceNotFountException("No records found for this ID");
+            }
+
+            Person updated = repository.save(new Person(person.id(), person.firstName(), person.lastName(), person.address(), person.gender()));
             logger.info("Person updated successfully!");
-            return repository.save(person);
-        }catch (Exception e){
+            return new PersonDTO(updated.getId(), updated.getFirstName(), updated.getLastName(), updated.getAddress(), updated.getGender());
+        } catch (Exception e) {
             throw new RuntimeException("Error updating person!");
         }
     }
 
     public void delete(Long id) {
         logger.info("Deleting one Person!");
-        try{
+        try {
             Optional<Person> optionalPerson = repository.findById(id);
-            if(optionalPerson.isEmpty()){throw new RuntimeException("No records found for this ID");}
+            if (optionalPerson.isEmpty()) {
+                throw new ResourceNotFountException("No records found for this ID");
+            }
             repository.deleteById(id);
             logger.info("Person deleted successfully!");
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException("Error deleting person!");
         }
     }

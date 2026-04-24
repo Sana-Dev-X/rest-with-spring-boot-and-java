@@ -1,6 +1,6 @@
 package br.com.sanadev.rest_with_spring_boot_and_java.person.mock;
 
-import br.com.sanadev.rest_with_spring_boot_and_java.person.model.Person;
+import br.com.sanadev.rest_with_spring_boot_and_java.dto.PersonDTO;
 import br.com.sanadev.rest_with_spring_boot_and_java.person.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -32,7 +32,7 @@ public class Mock implements CommandLineRunner {
 
         logger.log(Level.FINE,"The mock is running!");
 
-        List<Person> people = service.findAll();
+        List<PersonDTO> people = service.findAll();
 
         if(people.isEmpty()){
 
@@ -40,10 +40,10 @@ public class Mock implements CommandLineRunner {
             logger.log(Level.FINE,"The mock is starting!");
 
             //Mock
-            Person person1 = new Person("Deiverson", "Amorim", "Rua Caçapava", "Male");
-            Person person2 = new Person("Livia", "Curty", "Rua Caçapava", "Female");
-            Person person3 = new Person("Azazel", "Zinho", "Rua Caçapava", "Male");
-            Person person4 = new Person("Duqueza", "1", "Rua Caçapava", "Female");
+            PersonDTO person1 = new PersonDTO(null,"Deiverson", "Amorim", "Rua Caçapava", "Male");
+            PersonDTO person2 = new PersonDTO(null,"Livia", "Curty", "Rua Caçapava", "Female");
+            PersonDTO person3 = new PersonDTO(null,"Azazel", "Zinho", "Rua Caçapava", "Male");
+            PersonDTO person4 = new PersonDTO(null,"Duqueza", "1", "Rua Caçapava", "Female");
             service.create(person1);
             service.create(person2);
             service.create(person3);
@@ -53,6 +53,6 @@ public class Mock implements CommandLineRunner {
             people = service.findAll();
             logger.log(Level.FINE,"The people created were:");
         }
-        people.forEach(person -> logger.log(Level.FINE,person.getFirstName()));
+        people.forEach(person -> logger.log(Level.FINE,person.firstName()));
     }
 }
