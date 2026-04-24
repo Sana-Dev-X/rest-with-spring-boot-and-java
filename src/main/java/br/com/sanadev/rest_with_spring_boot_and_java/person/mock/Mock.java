@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.logging.Level;
 
 /**
  * Classe para realizar Mock de coisas específicas.
@@ -29,14 +30,14 @@ public class Mock implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        logger.info("The mock is running!");
+        logger.log(Level.FINE,"The mock is running!");
 
         List<Person> people = service.findAll();
 
         if(people.isEmpty()){
 
-            logger.info("The list is empty!");
-            logger.info("The mock is starting!");
+            logger.log(Level.FINE,"The list is empty!");
+            logger.log(Level.FINE,"The mock is starting!");
 
             //Mock
             Person person1 = new Person("Deiverson", "Amorim", "Rua Caçapava", "Male");
@@ -48,10 +49,10 @@ public class Mock implements CommandLineRunner {
             service.create(person3);
             service.create(person4);
 
-            logger.info("The mock is finished! \nFour people were added to the list!");
+            logger.log(Level.FINE, "The mock is finished! \nFour people were added to the list!");
             people = service.findAll();
-            logger.info("The people created were:");
+            logger.log(Level.FINE,"The people created were:");
         }
-        people.forEach(person -> logger.info(person.getFirstName()));
+        people.forEach(person -> logger.log(Level.FINE,person.getFirstName()));
     }
 }

@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
+import java.util.logging.Level;
 
 @Service
 public class PersonService{
@@ -23,19 +24,19 @@ public class PersonService{
     private PersonRepository repository;
 
     public Person findById(Long id){
-        logger.info("Finding one Person!");
+        logger.log(Level.FINE,"Finding one Person!");
         Person person = repository.findById(id).orElseThrow(
                 () -> new ResourceNotFountException("No records found for this ID")
         );
-        logger.info("Person found successfully!");
+        logger.log(Level.FINE,"Person found successfully!");
         return person;
     }
 
     public List<Person> findAll() {
-        logger.info("Finding all People!");
+        logger.log(Level.FINE,"Finding all People!");
         try {
             List<Person> people = repository.findAll();
-            logger.info("People found successfully!");
+            logger.log(Level.FINE,"People found successfully!");
             return people;
         } catch (Exception e) {
             throw new ResourceNotFountException("No records found");
@@ -43,10 +44,10 @@ public class PersonService{
     }
 
     public Person create(Person person) {
-        logger.info("Creating one Person!");
+        logger.log(Level.FINE,"Creating one Person!");
         try {
             Person entity = repository.save(person);
-            logger.info("Person created/updated successfully!");
+            logger.log(Level.FINE,"Person created/updated successfully!");
             return entity;
         } catch (Exception e) {
             throw new RuntimeException("Error creating person!");
