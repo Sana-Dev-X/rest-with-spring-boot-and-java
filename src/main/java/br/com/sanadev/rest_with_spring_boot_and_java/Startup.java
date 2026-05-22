@@ -1,6 +1,5 @@
 package br.com.sanadev.rest_with_spring_boot_and_java;
 
-import br.com.sanadev.rest_with_spring_boot_and_java.person.mock.Mock;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.persistence.autoconfigure.EntityScan;
