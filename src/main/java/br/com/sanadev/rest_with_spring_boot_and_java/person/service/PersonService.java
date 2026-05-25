@@ -2,7 +2,7 @@ package br.com.sanadev.rest_with_spring_boot_and_java.person.service;
 
 import br.com.sanadev.rest_with_spring_boot_and_java.person.exception.ResourceNotFountException;
 import br.com.sanadev.rest_with_spring_boot_and_java.person.model.Person;
-import br.com.sanadev.rest_with_spring_boot_and_java.dto.PersonDTO;
+import br.com.sanadev.rest_with_spring_boot_and_java.person.dto.PersonDTO;
 import br.com.sanadev.rest_with_spring_boot_and_java.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

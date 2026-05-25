@@ -1,6 +1,6 @@
 package br.com.sanadev.rest_with_spring_boot_and_java.person.controller;
 
-import br.com.sanadev.rest_with_spring_boot_and_java.dto.PersonDTO;
+import br.com.sanadev.rest_with_spring_boot_and_java.person.dto.PersonDTO;
 import br.com.sanadev.rest_with_spring_boot_and_java.person.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
