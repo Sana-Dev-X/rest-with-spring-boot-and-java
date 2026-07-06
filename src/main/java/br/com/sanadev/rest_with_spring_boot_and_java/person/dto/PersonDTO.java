@@ -5,14 +5,13 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
 @JsonPropertyOrder({"id", "address", "first_name", "last_name", "gender"})
-public record PersonDTO(
+public record PersonDTO (
         Long id,
         @JsonProperty("first_name") String firstName,
         @JsonProperty("last_name") String lastName,
         String address,
         String gender
 ){
-        @JsonProperty("gender")
         public String getFormattedGender(){
                 if(gender == null) return null;
 
