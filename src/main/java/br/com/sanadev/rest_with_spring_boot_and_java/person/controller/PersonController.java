@@ -47,11 +47,7 @@ public class PersonController {
     public EntityModel<PersonDTO> findById(@PathVariable String id){
         try{
             Long idLong = Long.parseLong(id);
-            EntityModel<PersonDTO> model = EntityModel.of(personService.findById(idLong));
-            model.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
-            model.add(linkTo(methodOn(PersonController.class).findAll()).withRel("all"));
-
-            return model;
+            return personService.addHateoasLinksToSingle(personService.findById(idLong));
         }catch (Exception e){
             throw new IllegalArgumentException("Invalid ID");
         }
@@ -64,21 +60,8 @@ public class PersonController {
             MediaType.APPLICATION_YAML_VALUE
     } )
     public CollectionModel<EntityModel<PersonDTO>> findAll(){
-
         List<PersonDTO> list = personService.findAll();
-
-        List<EntityModel<PersonDTO>> personModels = list.stream()
-                .map(person -> {
-                    EntityModel<PersonDTO> model = EntityModel.of(person);
-                    model.add(linkTo(methodOn(PersonController.class).findById(person.id().toString())).withSelfRel());
-                    return model;
-                })
-                .collect(Collectors.toList());
-
-        CollectionModel<EntityModel<PersonDTO>> collectionModel = CollectionModel.of(personModels);
-        collectionModel.add(linkTo(methodOn(PersonController.class).findAll()).withSelfRel());
-
-        return collectionModel;
+        return personService.addHateoasLinksToCollection(list);
     }
 
     //http://localhost:8080/person/create
@@ -96,10 +79,7 @@ public class PersonController {
     )
     public EntityModel<PersonDTO> create(@RequestBody PersonDTO person){
         PersonDTO createdPerson = personService.create(person);
-        EntityModel<PersonDTO> model = EntityModel.of(createdPerson);
-        model.add(linkTo(methodOn(PersonController.class).findById(createdPerson.id().toString())).withSelfRel());
-        model.add(linkTo(methodOn(PersonController.class).findAll()).withRel("all"));
-        return model;
+        return personService.addHateoasLinksToSingle(createdPerson);
     }
 
     //http://localhost:8080/person/update
@@ -117,10 +97,7 @@ public class PersonController {
     )
     public EntityModel<PersonDTO> update(@RequestBody PersonDTO person){
         PersonDTO updatedPerson = personService.update(person);
-        EntityModel<PersonDTO> model = EntityModel.of(updatedPerson);
-        model.add(linkTo(methodOn(PersonController.class).findById(updatedPerson.id().toString())).withSelfRel());
-        model.add(linkTo(methodOn(PersonController.class).findAll()).withRel("all"));
-        return model;
+        return personService.addHateoasLinksToSingle(updatedPerson);
     }
 
     //http://localhost:8080/person?id=5

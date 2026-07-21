@@ -1,10 +1,13 @@
 package br.com.sanadev.rest_with_spring_boot_and_java.person.service;
 
+import br.com.sanadev.rest_with_spring_boot_and_java.person.controller.PersonController;
 import br.com.sanadev.rest_with_spring_boot_and_java.person.exception.ResourceNotFountException;
 import br.com.sanadev.rest_with_spring_boot_and_java.person.model.Person;
 import br.com.sanadev.rest_with_spring_boot_and_java.person.dto.PersonDTO;
 import br.com.sanadev.rest_with_spring_boot_and_java.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,6 +15,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 import java.util.logging.Level;
+import java.util.stream.Collectors;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class PersonService {
@@ -71,11 +78,25 @@ public class PersonService {
                 throw new ResourceNotFountException("No records found for this ID");
             }
 
-            Person updated = repository.save(new Person(person.id(), person.firstName(), person.lastName(), person.address(), person.gender()));
+            Person updated = repository.save(
+                    new Person(
+                            person.id(),
+                            person.firstName(),
+                            person.lastName(),
+                            person.address(),
+                            person.gender()
+                    ));
+
             logger.info("Person updated successfully!");
-            return new PersonDTO(updated.getId(), updated.getFirstName(), updated.getLastName(), updated.getAddress(), updated.getGender());
+            return new PersonDTO(
+                    updated.getId(),
+                    updated.getFirstName(),
+                    updated.getLastName(),
+                    updated.getAddress(),
+                    updated.getGender());
         } catch (Exception e) {
-            throw new RuntimeException("Error updating person!");
+            logger.log(Level.SEVERE, "Error updating person!" + e.getMessage(), e);
+            throw new RuntimeException("Error updating person!" + e.getMessage());
         }
     }
 
@@ -92,4 +113,33 @@ public class PersonService {
             throw new RuntimeException("Error deleting person!");
         }
     }
+
+    public EntityModel<PersonDTO> addHateoasLinksToSingle(PersonDTO dto){
+        EntityModel<PersonDTO> model = EntityModel.of(dto);
+        //Self Link
+        model.add(linkTo(methodOn(PersonController.class).findById(dto.id().toString())).withSelfRel().withType("GET"));
+
+        //Links
+        model.add(linkTo(methodOn(PersonController.class).findAll()).withRel("findAll").withType("GET"));
+        model.add(linkTo(methodOn(PersonController.class).create(null)).withRel("create").withType("POST"));
+        model.add(linkTo(methodOn(PersonController.class).update(null)).withRel("update").withType("PUT"));
+        model.add(linkTo(methodOn(PersonController.class).delete(dto.id().toString())).withRel("delete").withType("DELETE"));
+
+        return model;
+    }
+
+    public CollectionModel<EntityModel<PersonDTO>> addHateoasLinksToCollection(List<PersonDTO> dtoList){
+
+        List<EntityModel<PersonDTO>> entities = dtoList.stream()
+                .map(this::addHateoasLinksToSingle)
+                .collect(Collectors.toList());
+        CollectionModel<EntityModel<PersonDTO>> collectionModel = CollectionModel.of(entities);
+
+        //Links
+        collectionModel.add(linkTo(methodOn(PersonController.class).findAll()).withSelfRel().withType("GET"));
+        collectionModel.add(linkTo(methodOn(PersonController.class).create(null)).withRel("create").withType("POST"));
+
+        return collectionModel;
+    }
+
 }
