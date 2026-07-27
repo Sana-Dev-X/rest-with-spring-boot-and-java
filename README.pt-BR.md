@@ -18,6 +18,8 @@ Este repositório contém meus estudos práticos sobre o desenvolvimento de API 
 
 * Operações CRUD com integração de banco de dados
 
+* Implementação de HATEOAS
+
 * Validação de entrada e tratamento de erros
 
 🛠 **Tecnologias Utilizadas**
@@ -40,53 +42,67 @@ Este repositório contém meus estudos práticos sobre o desenvolvimento de API 
 
 📁 **Estrutura do Projeto**
 
-        rest-with-spring-boot-and-java/
-        ├── src/main/java/br/com/sanadev/rest_with_spring_boot_and_java/
-        │   ├── Startup.java
-        │   ├── config/
-        │   ├── greetings/
-        │   │   ├── controller/
-        │   │   │   └── GreetingController.java
-        │   │   └── model/
-        │   │       └── Greeting.java
-        │   ├── math/
-        │   │   ├── controller/
-        │   │   │   └── MathController.java
-        │   │   ├── exception/
-        │   │   │   ├── ExceptionResponse.java
-        │   │   │   ├── UnsupportedMathOperationException.java
-        │   │   │   └── handler/
-        │   │   │       └── CustomEntityResponseHandlerForMathClasses.java
-        │   │   ├── service/
-        │   │   │   └── MathService.java
-        │   │   └── tools/
-        │   │       ├── NumberConverter.java
-        │   │       └── ParamValidator.java
-        │   └── person/
-        │       ├── controller/
-        │       │   └── PersonController.java
-        │       ├── exception/
-        │       │   ├── ExceptionResponse.java
-        │       │   ├── ResourceNotFoundException.java
-        │       │   └── handler/
-        │       │       └── CustomEntityResponseHandler.java
-        │       ├── mock/
-        │       │   └── Mock.java
-        │       ├── model/
-        │       │   └── Person.java
-        │       ├── repository/
-        │       │   └── PersonRepository.java
-        │       └── service/
-        │           └── PersonService.java
-        ├── src/main/resources/
-        │   ├── application.properties
-        │   └── application-dev.properties
-        ├── src/test/java/
-        │   └── [test packages mirror main structure]
-        ├── pom.xml
-        ├── docker-compose.yml (planejado)
-        ├── Dockerfile (planejado)
-        └── README.md  
++---br
+    +---com
+        +---sanadev
+            +---rest_with_spring_boot_and_java
+                |   Startup.java
+                |
+                +---config
+                |       WebConfig.java
+                |
+                +---example
+                +---greetings
+                |   +---controller
+                |   |       GreetingController.java
+                |   |
+                |   +---model
+                |           Greeting.java
+                |
+                +---math
+                |   +---controller
+                |   |       MathController.java
+                |   |
+                |   +---exception
+                |   |   |   ExceptionResponse.java
+                |   |   |   UnsupportedMathOperationException.java
+                |   |   |
+                |   |   +---handler
+                |   |           CustomEntityResponseHandlerForMathClasses.java
+                |   |
+                |   +---service
+                |   |       MathService.java
+                |   |
+                |   +---tools
+                |           NumberConverter.java
+                |           ParamValidator.java
+                |
+                +---person
+                |   +---controller
+                |   |       PersonController.java
+                |   |
+                |   +---dto
+                |   |       PersonDTO.java
+                |   |
+                |   +---exception
+                |   |   |   ExceptionResponse.java
+                |   |   |   ResourceNotFountException.java
+                |   |   |
+                |   |   +---handler
+                |   |           CustomEntityResponseHandler.java
+                |   |
+                |   +---model
+                |   |       Person.java
+                |   |
+                |   +---service
+                |           PersonService.java
+                |
+                +---repository
+                |       PersonRepository.java
+                |
+                +---serialization
+                    +---converter
+                            YamlJackson2HttpMessageConverter.java
 
 🚀 **Como Executar**
 
@@ -133,41 +149,30 @@ A aplicação estará disponível em:
 
 📚 **Endpoints da API**
 
-Greeting Controller
+Greeting
 
-*   GET /greeting - Retorna uma saudação básica
+- GET /greeting — retorna uma saudação. Use o query parameter 'name' (ex.: /greeting?name=Sana). Padrão: "mundo!".
 
-*   GET /greeting/{name} - Retorna uma saudação personalizada
+Math
 
-Math Controller
+- GET /math/sum/{first}/{second}
+- GET /math/subtraction/{first}/{second}
+- GET /math/multiplication/{first}/{second}
+- GET /math/division/{first}/{second}
+- GET /math/square-root/{number}
+- GET /math/average/{first}/{second}
 
-*   GET /math/sum/{numberOne}/{numberTwo} - Soma de dois números
+Person (suporta content negotiation: application/json, application/xml, application/x-yaml)
 
-*   GET /math/subtraction/{numberOne}/{numberTwo} - Subtração de dois números
-
-*   GET /math/multiplication/{numberOne}/{numberTwo} - Multiplicação de dois números
-
-*   GET /math/division/{numberOne}/{numberTwo} - Divisão de dois números
-
-*   GET /math/mean/{numberOne}/{numberTwo} - Média de dois números
-
-*   GET /math/squareRoot/{number} - Raiz quadrada de um número
-
-Person Controller (Operações CRUD)
-
-*   GET /person - Lista todas as pessoas
-
-*   GET /person/{id} - Encontra pessoa por ID
-
-*   POST /person - Cria nova pessoa
-
-*   PUT /person/{id} - Atualiza pessoa existente
-
-*   DELETE /person/{id} - Deleta pessoa
+- GET /person — lista todas as pessoas (retorna links HATEOAS)
+- GET /person/{id} — busca pessoa por id
+- POST /person — cria uma pessoa (envie JSON/XML/YAML no corpo)
+- PUT /person — atualiza uma pessoa (envie a representação completa no corpo)
+- DELETE /person?id={id} — deleta por id (query parameter)
 
 📖 **Documentação da API**
 
-A documentação interativa da API estará disponível em breve via Swagger UI
+- Swagger / SpringDoc não está configurado no pom.xml; documentação interativa não está disponível por padrão.
 
 🎯 **Objetivos de Aprendizagem**
 
@@ -201,6 +206,8 @@ Conceitos Abordados:
 
 *	Controllers e Mapeamento de Endpoints - @RestController, @RequestMapping, anotações de método HTTP
 
+*    Versionamento de API (conceito aplicado, mas descontinuado no decorrer do projeto)
+
 *	Tratamento de Exceções - Tratamento global de exceções com @ExceptionHandler e @ControllerAdvice
 
 *	Persistência de Dados - Mapeamento de entidades, repositórios Spring Data JPA
@@ -210,6 +217,8 @@ Conceitos Abordados:
 *	Validação de Entrada - Validadores personalizados e validação de parâmetros
 
 *	Estrutura do Projeto - Organizado por funcionalidade/módulo
+
+*    Logging estruturado com Logger
 
 *	Configuração - Configuração externalizada com application.properties
 
@@ -225,9 +234,7 @@ Metas de Curto Prazo:
 
 *	Implementar paginação e ordenação para endpoints de listagem
 
-*	Adicionar logging estruturado com SLF4J
-
-*	Metas de Médio Prazo:
+Metas de Médio Prazo:
 
 *	Adicionar autenticação e autorização JWT
 
@@ -238,8 +245,6 @@ Metas de Curto Prazo:
 *	Configurar Docker e Docker Compose para conteinerização
 
 *	Adicionar monitoramento com Spring Boot Actuator
-
-*	Implementar versionamento de API
 
 Metas de Longo Prazo:
 

@@ -10,7 +10,7 @@ This repository contains my practical studies on REST API development using Spri
 
 * Global exception handling
 
-* Automatic API documentation
+* Content negotiation (JSON, XML, YAML) and HATEOAS for Person responses
 
 * Structuring Spring Boot projects
 
@@ -32,7 +32,7 @@ This repository contains my practical studies on REST API development using Spri
 
 * MySQL 8.0+
 
-* Swagger/OpenAPI (SpringDoc)
+* HATEOAS, Jackson XML/YAML (no SpringDoc configured)
 
 * Maven
 
@@ -133,41 +133,31 @@ The application will be available at:
 
 📚 **API Endpoints**
 
-Greeting Controller
+Greeting
 
-*   GET /greeting - Returns a basic greeting
+- GET /greeting — returns a greeting. Use query parameter 'name' (e.g. /greeting?name=Sana). Default: "mundo!".
 
-*   GET /greeting/{name} - Returns a personalized greeting
+Math
 
-Math Controller
+- GET /math/sum/{first}/{second}
+- GET /math/subtraction/{first}/{second}
+- GET /math/multiplication/{first}/{second}
+- GET /math/division/{first}/{second}
+- GET /math/square-root/{number}
+- GET /math/average/{first}/{second}
 
-*   GET /math/sum/{numberOne}/{numberTwo} - Sum of two numbers
+Person (content negotiation supported: application/json, application/xml, application/x-yaml)
 
-*   GET /math/subtraction/{numberOne}/{numberTwo} - Subtraction of two numbers
-
-*   GET /math/multiplication/{numberOne}/{numberTwo} - Multiplication of two numbers
-
-*   GET /math/division/{numberOne}/{numberTwo} - Division of two numbers
-
-*   GET /math/mean/{numberOne}/{numberTwo} - Average of two numbers
-
-*   GET /math/squareRoot/{number} - Square root of a number
-
-Person Controller (CRUD Operations)
-
-*   GET /person - List all persons
-
-*   GET /person/{id} - Find person by ID
-
-*   POST /person - Create new person
-
-*   PUT /person/{id} - Update existing person
-
-*   DELETE /person/{id} - Delete person
+- GET /person — list all persons (returns HATEOAS links)
+- GET /person/{id} — get a person by id
+- POST /person — create a person (send JSON/XML/YAML body)
+- PUT /person — update a person (send full representation in body)
+- DELETE /person?id={id} — delete by id (query parameter)
 
 📖 **API Documentation**
 
-The interactive API documentation will soon be available via Swagger UI
+- Swagger / SpringDoc is not configured in pom.xml, so interactive API docs are not available by default.
+
 
 🎯 **Learning Objectives**
 
