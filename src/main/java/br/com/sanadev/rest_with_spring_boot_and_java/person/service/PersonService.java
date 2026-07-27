@@ -1,6 +1,7 @@
 package br.com.sanadev.rest_with_spring_boot_and_java.person.service;
 
 import br.com.sanadev.rest_with_spring_boot_and_java.person.controller.PersonController;
+import br.com.sanadev.rest_with_spring_boot_and_java.person.exception.RequiredObjectIsNullException;
 import br.com.sanadev.rest_with_spring_boot_and_java.person.exception.ResourceNotFountException;
 import br.com.sanadev.rest_with_spring_boot_and_java.person.model.Person;
 import br.com.sanadev.rest_with_spring_boot_and_java.person.dto.PersonDTO;
@@ -57,6 +58,11 @@ public class PersonService {
 
     public PersonDTO create(PersonDTO person) {
         logger.log(Level.FINE, "Creating one Person!");
+
+        if (person == null) {
+            throw new RequiredObjectIsNullException();
+        }
+
         try {
             Person personToSave = new Person(person.firstName(), person.lastName(), person.address(), person.gender());
             Person entity = repository.save(personToSave);
@@ -72,6 +78,12 @@ public class PersonService {
 
     public PersonDTO update(PersonDTO person) {
         logger.info("Updating one Person!");
+
+
+        if (person == null) {
+            throw new RequiredObjectIsNullException();
+        }
+
         try {
             Optional<Person> optionalPerson = repository.findById(person.id());
             if (optionalPerson.isEmpty()) {
