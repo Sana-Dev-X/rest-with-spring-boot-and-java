@@ -15,6 +15,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -57,6 +59,22 @@ class PersonServiceTest {
 
     @Test
     void findAll() {
+
+        List<Person> list = new ArrayList<>();
+        list.add(new Person(1L, "João", "Silva", "Rua Teste, 123", "Male"));
+        list.add(new Person(2L, "Maria", "Souza", "Rua Teste, 456", "Female"));
+        list.add(new Person(3L, "Pedro", "Almeida", "Rua Teste, 789", "Male"));
+
+        when(repository.findAll()).thenReturn(list);
+        List<PersonDTO> result = service.findAll();
+
+        //verificar o objeto
+        assertNotNull(result);
+        assertEquals(3, result.size());
+        assertEquals(list.get(0).getId(), result.get(0).id());
+        assertEquals(list.get(1).getId(), result.get(1).id());
+        assertEquals(list.get(2).getId(), result.get(2).id());
+        verify(repository, times(1)).findAll();
     }
 
     @Test
